@@ -19,7 +19,7 @@ class Two_Gis_Maps extends Widget_Base {
 	 * @return string Widget name.
 	 */
 	public function get_name() {
-		return '2gis-maps';
+		return 'two-gis-maps';
 	}
 
 	/**
@@ -523,8 +523,8 @@ class Two_Gis_Maps extends Widget_Base {
 		endforeach;
 		?>
 
-		<div id="eb-map-<?php echo esc_attr( $this->get_id() ); ?>"
-		     class="eb-map"
+		<div id="mihdan_elementor_two_gis_map_<?php echo esc_attr( $this->get_id() ); ?>"
+		     class="mihdan-elementor-two-gis-map"
 		     data-eb-map-lat="<?php echo $settings['map_lat']; ?>"
 		     data-eb-map-lng="<?php echo $settings['map_lng']; ?>"
 		     data-eb-map-zoom="<?php echo $settings['zoom']['size']; ?>"

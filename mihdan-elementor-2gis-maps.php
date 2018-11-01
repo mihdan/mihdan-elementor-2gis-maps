@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: Mihdan: Elementor 2gis Maps
- * Description: Elementor Yandex Maps Widget - Easily add multiple address pins onto the same map with support for different map types (Road Map/Satellite/Hybrid/Terrain) and custom map style. Freely edit info window content of your pins with the standard Elementor text editor. And many more custom map options.
- * Plugin URI:  https://github.com/mihdan/mihdan-elementor-yandex-maps
+ * Description: Elementor 2gis Maps Widget - Easily add multiple address pins onto the same map with support for different map types (Road Map/Satellite/Hybrid/Terrain) and custom map style. Freely edit info window content of your pins with the standard Elementor text editor. And many more custom map options.
+ * Plugin URI:  https://github.com/mihdan/mihdan-elementor-2gis-maps
  * Version:     1.1.0
  * Author:      Mikhail Kobzarev
  * Author URI:  https://www.kobzarev.com/
@@ -104,8 +104,8 @@ function mihdan_elementor_2gis_maps_get_option( $option, $section, $default = ''
  */
 add_action( 'elementor/editor/before_enqueue_scripts', function() {
 	wp_enqueue_style( 'mihdan-elementor-2gis-maps-admin', plugins_url( '/assets/css/mihdan-elementor-2gis-maps-admin.css', EB_2GIS_MAPS_FILE ) );
-	wp_enqueue_script( 'mihdan-elementor-2gis-maps-api-admin', 'https://api-maps.2gis.ru/2.1/?lang=ru_RU&source=admin', [ 'jquery' ], EB_2GIS_MAPS_VERSION, true );
-	wp_localize_script( 'mihdan-elementor-2gis-maps-api-admin', 'EB_WP_URL', array( 'plugin_url' => plugin_dir_url( __FILE__ ) ) );
+	wp_enqueue_script( 'mihdan-elementor-2gis-maps-api-admin', 'https://maps.api.2gis.ru/2.0/loader.js?pkg=full&source=admin', [ 'jquery' ], EB_2GIS_MAPS_VERSION, true );
+	//wp_localize_script( 'mihdan-elementor-2gis-maps-api-admin', 'EB_WP_URL', array( 'plugin_url' => plugin_dir_url( __FILE__ ) ) );
 	wp_enqueue_script( 'mihdan-elementor-2gis-maps-admin', plugins_url( '/assets/js/mihdan-elementor-2gis-maps-admin.js', EB_2GIS_MAPS_FILE ), [ 'mihdan-elementor-2gis-maps-api-admin' ], EB_2GIS_MAPS_VERSION, true );
 } );
 
@@ -114,8 +114,8 @@ add_action( 'elementor/frontend/after_enqueue_styles', function() {
 } );
 
 add_action( 'elementor/frontend/after_register_scripts', function() {
-	wp_register_script( 'mihdan-elementor-2gis-maps-api', 'https://api-maps.2gis.ru/2.1/?lang=ru_RU&source=frontend', [], EB_2GIS_MAPS_VERSION, true );
-	wp_localize_script( 'mihdan-elementor-2gis-maps-api', 'EB_WP_URL', array( 'plugin_url' => plugin_dir_url( __FILE__ ) ) );
+	wp_register_script( 'mihdan-elementor-2gis-maps-api', 'https://maps.api.2gis.ru/2.0/loader.js?pkg=full&lazy__=true&source=frontend', [], EB_2GIS_MAPS_VERSION, true );
+	//wp_localize_script( 'mihdan-elementor-2gis-maps-api', 'EB_WP_URL', array( 'plugin_url' => plugin_dir_url( __FILE__ ) ) );
 	wp_register_script( 'mihdan-elementor-2gis-maps', plugins_url( '/assets/js/mihdan-elementor-2gis-maps.js', EB_2GIS_MAPS_FILE ), [ 'mihdan-elementor-2gis-maps-api' ], EB_2GIS_MAPS_VERSION, true );
 } );
 
