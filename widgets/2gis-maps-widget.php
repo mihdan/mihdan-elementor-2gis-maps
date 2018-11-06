@@ -131,7 +131,7 @@ class Two_Gis_Maps extends Widget_Base {
 				'range'   => [
 					'px' => [
 						'min' => 1,
-						'max' => 19,
+						'max' => 18,
 					],
 				],
 			]
@@ -149,7 +149,7 @@ class Two_Gis_Maps extends Widget_Base {
 					],
 				],
 				'default' => [
-					'size' => 300,
+					'size' => 400,
 				],
 			]
 		);
@@ -298,6 +298,27 @@ class Two_Gis_Maps extends Widget_Base {
 			'map_behavior',
 			[
 				'label' => __( 'Map Behavior', 'elementor' ),
+			]
+		);
+
+		/**
+		 * dragging : false,
+		touchZoom: false,
+		scrollWheelZoom: false,
+		doubleClickZoom: false,
+		boxZoom: false,
+		geoclicker: false,
+		zoomControl: false,
+		fullscreenControl: false
+		 */
+
+		$this->add_control(
+			'animate',
+			[
+				'label'       => __( 'Enable Animate', 'elementor' ),
+				'type'        => Controls_Manager::SWITCHER,
+				'default'     => 'no',
+				'description' => __( 'Включить/Выключить анимацию на карте', 'elementor' ),
 			]
 		);
 

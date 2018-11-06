@@ -79,6 +79,9 @@
 			    center: [ map_lat, map_lng ],
 			    zoom: zoom
 		    });
+
+		    console.log( map.geocoder );
+
 	    } );
 
 
