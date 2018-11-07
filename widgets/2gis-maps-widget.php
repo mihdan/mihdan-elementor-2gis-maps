@@ -90,12 +90,39 @@ class Two_Gis_Maps extends Widget_Base {
 		);
 
 		$this->add_control(
-			'map_notice',
+			'map_search_header',
 			[
 				'label'       => __( 'Find Latitude & Longitude', 'elementor' ),
-				'type'        => Controls_Manager::RAW_HTML,
-				'raw'         => '<form onsubmit="mihdan_elementor_yandex_maps_find_address( this );" action="javascript:void(0);"><input type="text" id="eb-map-find-address" class="eb-map-find-address" style="margin-top:10px; margin-bottom:10px;"><input type="submit" value="Search" class="elementor-button elementor-button-default" onclick="mihdan_elementor_yandex_maps_find_address( this )"></form><div id="eb-output-result" class="eb-output-result" style="margin-top:10px; line-height: 1.3; font-size: 12px;"></div>',
-				'label_block' => true,
+				'type'        => Controls_Manager::HEADING,
+			]
+		);
+
+		$this->add_control(
+			'map_search_query',
+			[
+				'label'       => __( 'Latitude', 'elementor' ),
+				'type'        => Controls_Manager::TEXT,
+				'placeholder' => 'Фраза для поиска',
+				'show_label'  => false,
+			]
+		);
+
+		$this->add_control(
+			'map_search_button',
+			[
+				//'label'       => __( 'Delete Content', 'plugin-name' ),
+				'type'        => \Elementor\Controls_Manager::BUTTON,
+				'button_type' => 'default',
+				'text'        => __( 'Search', 'plugin-domain' ),
+				'event'       => 'metg:editor:search:center',
+			]
+		);
+
+		$this->add_control(
+			'map_search_notice',
+			[
+				'type'      => Controls_Manager::RAW_HTML,
+				'separator' => 'after',
 			]
 		);
 

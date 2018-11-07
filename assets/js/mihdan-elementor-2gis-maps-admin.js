@@ -1,4 +1,71 @@
-function mihdan_elementor_yandex_maps_find_address( ob ) {
+( function( $, window, document, undefined ) {
+
+	'use strict';
+	
+	var metg = {
+		search: function( query, $output, $lat, $lng  ) {
+			var serviceURL = 'https://nominatim.openstreetmap.org/search';
+
+			query = $.trim( query );
+
+			if ( ! query ) {
+				$output.html( 'Вы забыли указать, что искать' );
+				return;
+			}
+
+			$.ajax( {
+				url: serviceURL,
+				data: {
+					q: query,
+					limit: 1,
+					format: 'json',
+					addressdetails: 1,
+					//county: 'Россия',
+					county_code: 'ru'
+					//json_callback: 'metg.callback',
+				},
+				dataType: 'json',
+				success: function ( data ) {
+					if ( data.length ) {
+						var first_geo_object = data[0];
+
+						$output.html( first_geo_object.display_name );
+						$lat.val( first_geo_object.lat ).trigger('input');
+						$lng.val( first_geo_object.lon ).trigger('input');
+
+					} else {
+						$output.html( 'По вашему запросу ничего не найдено' );
+					}
+
+
+				},
+				error: function ( data ) {
+
+				}
+			} );
+		},
+	};
+
+	/**
+	 * Поиск центра карты
+	 */
+	window.elementor.channels.editor.on( 'metg:editor:search:center', function ( e ) {
+
+		var $btn = e.$el[0],
+			$output = $( $btn.nextSibling ).find('.elementor-control-raw-html'),
+			$query = $( '[data-setting="map_search_query"]' ),
+			$lat = $( '[data-setting="map_lat"]' ),
+			$lng = $( '[data-setting="map_lng"]' );
+
+
+		metg.search( $query.val(), $output, $lat, $lng );
+	} );
+
+} )( window.jQuery, window, document );
+
+
+
+function mihdan_elementor_yandex_maps_find_address__( ob, map_id ) {
 
 	'use strict';
 
@@ -6,7 +73,7 @@ function mihdan_elementor_yandex_maps_find_address( ob ) {
 	    address = $( ob ).parent().find('input').attr('value'),
         output = $( ob ).parent().find('.eb-output-result');
 
-    if( address !== '' ) {
+    if( address !== '' ) { console.log( map_id );
 
     	var serviceURL = 'https://nominatim.openstreetmap.org/search';
 
@@ -41,7 +108,7 @@ function mihdan_elementor_yandex_maps_find_address( ob ) {
 	    $( output ).html( 'Не указан адрес для поиска' );
     }
 }
-function mihdan_elementor_yandex_maps_find_pin_address( ob ) {
+function mihdan_elementor_yandex_maps_find_pin_address__( ob ) {
 
 	var address = $( ob ).parent().find('input').attr('value');
 	if( address !== '' ) {
@@ -67,11 +134,11 @@ function mihdan_elementor_yandex_maps_find_pin_address( ob ) {
 	}
 
 }
-
-(function($) {
-    $('.repeater-fields').each(function() {
-        $(this).click(function() {
-            $('.eb-output-result').empty();
-        });
-    });
-});
+//
+//(function($) {
+//    $('.repeater-fields').each(function() {
+//        $(this).click(function() {
+//            $('.eb-output-result').empty();
+//        });
+//    });
+//});
