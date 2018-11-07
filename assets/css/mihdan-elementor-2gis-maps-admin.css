@@ -13,3 +13,16 @@
     line-height: 1.3;
     font-size: 12px;
 }
+
+.elementor-control-map_search_query .elementor-control-input-wrapper,
+.elementor-control-map_search_button .elementor-control-input-wrapper {
+	width: 100% !important;
+}
+.elementor-control-map_search_button .elementor-control-field {
+	display: block !important;
+}
+.elementor-control-map_search_button .elementor-button {
+	display: block !important;
+	width: 100% !important;
+	height: 30px !important;
+}
