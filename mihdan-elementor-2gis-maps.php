@@ -99,24 +99,23 @@ function mihdan_elementor_2gis_maps_get_option( $option, $section, $default = ''
 	return $default;
 }
 
-/**
- * Register and enqueue a custom stylesheet in the Elementor.
- */
-add_action( 'elementor/editor/before_enqueue_scripts', function() {
+function mihdan_elementor_2gis_maps_editor_before_enqueue_scripts() {
 	wp_enqueue_style( 'mihdan-elementor-2gis-maps-admin', plugins_url( '/assets/css/mihdan-elementor-2gis-maps-admin.css', EB_2GIS_MAPS_FILE ) );
-	wp_enqueue_script( 'mihdan-elementor-2gis-maps-api-admin', 'https://maps.api.2gis.ru/2.0/loader.js?pkg=full&source=admin', [ 'jquery' ], EB_2GIS_MAPS_VERSION, true );
-	//wp_localize_script( 'mihdan-elementor-2gis-maps-api-admin', 'EB_WP_URL', array( 'plugin_url' => plugin_dir_url( __FILE__ ) ) );
+	wp_enqueue_script( 'mihdan-elementor-2gis-maps-api-admin', 'https://maps.api.2gis.ru/2.0/loader.js?pkg=full&source=admin', [ 'jquery', 'elementor-editor' ], EB_2GIS_MAPS_VERSION, true );
 	wp_enqueue_script( 'mihdan-elementor-2gis-maps-admin', plugins_url( '/assets/js/mihdan-elementor-2gis-maps-admin.js', EB_2GIS_MAPS_FILE ), [ 'mihdan-elementor-2gis-maps-api-admin' ], EB_2GIS_MAPS_VERSION, true );
-} );
+}
+add_action( 'elementor/editor/before_enqueue_scripts', 'mihdan_elementor_2gis_maps_editor_before_enqueue_scripts' );
 
-add_action( 'elementor/frontend/after_enqueue_styles', function() {
+function mihdan_elementor_2gis_maps_frontend_after_enqueue_styles() {
 	wp_enqueue_style( 'mihdan-elementor-2gis-maps', plugins_url( '/assets/css/mihdan-elementor-2gis-maps.css', EB_2GIS_MAPS_FILE ) );
-} );
+}
+add_action( 'elementor/frontend/after_enqueue_styles', 'mihdan_elementor_2gis_maps_frontend_after_enqueue_styles' );
 
-add_action( 'elementor/frontend/after_register_scripts', function() {
-	wp_register_script( 'mihdan-elementor-2gis-maps-api', 'https://maps.api.2gis.ru/2.0/loader.js?pkg=full&lazy__=true&source=frontend', [], EB_2GIS_MAPS_VERSION, true );
+function mihdan_elementor_2gis_maps_frontend_after_register_scripts() {
+	wp_register_script( 'mihdan-elementor-2gis-maps-api', 'https://maps.api.2gis.ru/2.0/loader.js?pkg=full&lazy__=true&source=frontend', [ 'jquery' ], EB_2GIS_MAPS_VERSION, true );
 	//wp_localize_script( 'mihdan-elementor-2gis-maps-api', 'EB_WP_URL', array( 'plugin_url' => plugin_dir_url( __FILE__ ) ) );
 	wp_register_script( 'mihdan-elementor-2gis-maps', plugins_url( '/assets/js/mihdan-elementor-2gis-maps.js', EB_2GIS_MAPS_FILE ), [ 'mihdan-elementor-2gis-maps-api' ], EB_2GIS_MAPS_VERSION, true );
-} );
+}
+add_action( 'elementor/frontend/after_register_scripts', 'mihdan_elementor_2gis_maps_frontend_after_register_scripts' );
 
 // eof;
