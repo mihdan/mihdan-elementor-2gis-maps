@@ -63,51 +63,6 @@
 
 } )( window.jQuery, window, document );
 
-
-
-function mihdan_elementor_yandex_maps_find_address__( ob, map_id ) {
-
-	'use strict';
-
-    var $ = jQuery,
-	    address = $( ob ).parent().find('input').attr('value'),
-        output = $( ob ).parent().find('.eb-output-result');
-
-    if( address !== '' ) { console.log( map_id );
-
-    	var serviceURL = 'https://nominatim.openstreetmap.org/search';
-
-	    $( output ).html( 'Ищу в поте лица ...' );
-
-	    DG.ajax( serviceURL, {
-		    type: 'get',
-		    data: {
-			    q: address,
-			    limit: 1,
-			    format: 'json',
-			    addressdetails: 1,
-		    },
-		    success: function( data ) {
-			    if ( data.length ) {
-
-				    var firstGeoObject = data[0];
-
-				    $( output ).html( firstGeoObject.display_name );
-
-				    $( ob ).parents('.elementor-control-map_notice').nextAll('.elementor-control-map_lat').find("input").val( firstGeoObject.lat ).trigger("input");
-				    $( ob ).parents('.elementor-control-map_notice').nextAll('.elementor-control-map_lng').find("input").val( firstGeoObject.lon ).trigger("input");
-			    } else {
-				    $( output ).html( 'Ничего не найдено' );
-			    }
-		    },
-		    error: function( error ) {
-			    $( output ).html( error );
-		    }
-	    } );
-    } else {
-	    $( output ).html( 'Не указан адрес для поиска' );
-    }
-}
 function mihdan_elementor_yandex_maps_find_pin_address__( ob ) {
 
 	var address = $( ob ).parent().find('input').attr('value');

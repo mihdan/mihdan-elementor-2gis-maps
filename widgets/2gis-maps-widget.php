@@ -110,7 +110,6 @@ class Two_Gis_Maps extends Widget_Base {
 		$this->add_control(
 			'map_search_button',
 			[
-				//'label'       => __( 'Delete Content', 'plugin-name' ),
 				'type'        => \Elementor\Controls_Manager::BUTTON,
 				'button_type' => 'default',
 				'text'        => __( 'Search', 'plugin-domain' ),
@@ -217,42 +216,12 @@ class Two_Gis_Maps extends Widget_Base {
 		);
 
 		$this->add_control(
-			'ruler_control',
+			'fullscreen_control',
 			[
-				'label'       => __( 'Ruler Control', 'elementor' ),
+				'label'       => __( 'Fullscreen Control', 'elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
 				'default'     => 'no',
-				'description' => __( 'Линейка и масштабный отрезок', 'elementor' ),
-			]
-		);
-
-		$this->add_control(
-			'search_control',
-			[
-				'label'       => __( 'Search Control', 'elementor' ),
-				'type'        => Controls_Manager::SWITCHER,
-				'default'     => 'no',
-				'description' => __( 'Поиск на карте', 'elementor' ),
-			]
-		);
-
-		$this->add_control(
-			'traffic_control',
-			[
-				'label'       => __( 'Traffic Control', 'elementor' ),
-				'type'        => Controls_Manager::SWITCHER,
-				'default'     => 'no',
-				'description' => __( 'Панель пробок', 'elementor' ),
-			]
-		);
-
-		$this->add_control(
-			'type_selector',
-			[
-				'label'       => __( 'Type Selector', 'elementor' ),
-				'type'        => Controls_Manager::SWITCHER,
-				'default'     => 'yes',
-				'description' => __( 'Панель переключения типа карт', 'elementor' ),
+				'description' => __( 'Кнопка включения полноэкранного режима', 'elementor' ),
 			]
 		);
 
@@ -262,57 +231,37 @@ class Two_Gis_Maps extends Widget_Base {
 				'label'       => __( 'Zoom Control', 'elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
 				'default'     => 'yes',
-				'description' => __( 'Ползунок масштаба', 'elementor' ),
+				'description' => __( 'Элемент управления масштабом', 'elementor' ),
 			]
 		);
 
 		$this->add_control(
-			'geolocation_control',
+			'ruler_control',
 			[
-				'label'       => __( 'Geolocation Control', 'elementor' ),
+				'label'       => __( 'Ruler Control', 'elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
 				'default'     => 'no',
-				'description' => __( 'Элемент управления геолокацией', 'elementor' ),
+				'description' => __( 'Кнопка включения линейки', 'elementor' ),
 			]
 		);
 
 		$this->add_control(
-			'route_editor',
+			'traffic_control',
 			[
-				'label'       => __( 'Route Editor', 'elementor' ),
+				'label'       => __( 'Traffic Control', 'elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
 				'default'     => 'no',
-				'description' => __( 'Редактор маршрутов', 'elementor' ),
+				'description' => __( 'Кнопка включения слоя с пробками', 'elementor' ),
 			]
 		);
 
 		$this->add_control(
-			'fullscreen_control',
+			'scale_control',
 			[
-				'label'       => __( 'Fullscreen Control', 'elementor' ),
+				'label'       => __( 'Scale Control', 'elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
 				'default'     => 'no',
-				'description' => __( 'Элемент управления «полноэкранным режимом»', 'elementor' ),
-			]
-		);
-
-		$this->add_control(
-			'route_button_control',
-			[
-				'label'       => __( 'Route Button Control', 'elementor' ),
-				'type'        => Controls_Manager::SWITCHER,
-				'default'     => 'no',
-				'description' => __( 'Панель для построения маршрутов', 'elementor' ),
-			]
-		);
-
-		$this->add_control(
-			'route_panel_control',
-			[
-				'label'       => __( 'Route Panel Control', 'elementor' ),
-				'type'        => Controls_Manager::SWITCHER,
-				'default'     => 'no',
-				'description' => __( 'Панель маршрутизации', 'elementor' ),
+				'description' => __( 'Элемент отображения масштаба', 'elementor' ),
 			]
 		);
 
@@ -559,7 +508,7 @@ class Two_Gis_Maps extends Widget_Base {
 
 		$mapmarkers = array();
 
-		foreach ( $settings['tabs'] as $index => $item ) :
+		foreach ( $settings['tabs'] as $index => $item ) {
 			$tab_count    = $index + 1;
 			$mapmarkers[] = array(
 				'lat'      => $item['pin_lat'],
@@ -568,35 +517,19 @@ class Two_Gis_Maps extends Widget_Base {
 				'content'  => htmlspecialchars( $item['pin_content'], ENT_QUOTES & ~ENT_COMPAT ),
 				'pin_icon' => $item['pin_icon'],
 			);
-		endforeach;
+		}
 		?>
 
 		<div id="mihdan_elementor_two_gis_map_<?php echo esc_attr( $this->get_id() ); ?>"
 		     class="mihdan-elementor-two-gis-map"
-		     data-eb-map-lat="<?php echo $settings['map_lat']; ?>"
-		     data-eb-map-lng="<?php echo $settings['map_lng']; ?>"
-		     data-eb-map-zoom="<?php echo $settings['zoom']['size']; ?>"
-		     data-eb-map-type="<?php echo $settings['map_type']; ?>"
-		     data-eb-ruler-control="<?php echo $settings['ruler_control']; ?>"
-		     data-eb-search-control="<?php echo $settings['search_control']; ?>"
-		     data-eb-traffic-control="<?php echo $settings['traffic_control']; ?>"
-		     data-eb-type-selector="<?php echo $settings['type_selector']; ?>"
-		     data-eb-zoom-control="<?php echo $settings['zoom_control']; ?>"
-		     data-eb-geolocation-control="<?php echo $settings['geolocation_control']; ?>"
-		     data-eb-route-editor="<?php echo $settings['route_editor']; ?>"
-		     data-eb-fullscreen-control="<?php echo $settings['fullscreen_control']; ?>"
-		     data-eb-route-button-control="<?php echo $settings['route_button_control']; ?>"
-		     data-eb-route-panel-control="<?php echo $settings['route_panel_control']; ?>"
-		     data-eb-disable-scroll-zoom="<?php echo $settings['disable_scroll_zoom']; ?>"
-		     data-eb-disable-dbl-click-zoom="<?php echo $settings['disable_dbl_click_zoom']; ?>"
-		     data-eb-disable-drag="<?php echo $settings['disable_drag']; ?>"
-		     data-eb-disable-left-mouse-button-magnifier="<?php echo $settings['disable_left_mouse_button_magnifier']; ?>"
-		     data-eb-disable-right-mouse-button-magnifier="<?php echo $settings['disable_right_mouse_button_magnifier']; ?>"
-		     data-eb-disable-multi-touch="<?php echo $settings['disable_multi_touch']; ?>"
-		     data-eb-disable-route-editor="<?php echo $settings['disable_route_editor']; ?>"
-		     data-eb-disable-ruler="<?php echo $settings['disable_ruler']; ?>"
-		     data-eb-infowindow-max-width="<?php echo $settings['infowindow_max_width']; ?>"
-		     data-eb-locations='<?php echo json_encode( $mapmarkers ); ?>'
+		     data-metm-map-lat="<?php echo $settings['map_lat']; ?>"
+		     data-metm-map-lng="<?php echo $settings['map_lng']; ?>"
+		     data-metm-map-zoom="<?php echo $settings['zoom']['size']; ?>"
+		     data-metm-ruler-control="<?php echo $settings['ruler_control']; ?>"
+		     data-metm-traffic-control="<?php echo $settings['traffic_control']; ?>"
+		     data-metm-zoom-control="<?php echo $settings['zoom_control']; ?>"
+		     data-metm-fullscreen-control="<?php echo $settings['fullscreen_control']; ?>"
+		     data-metm-locations='<?php echo json_encode( $mapmarkers ); ?>'
 		     style="height: <?php echo $settings['height']['size']; ?><?php echo $settings['height']['unit']; ?>;"></div>
 	<?php
 	}

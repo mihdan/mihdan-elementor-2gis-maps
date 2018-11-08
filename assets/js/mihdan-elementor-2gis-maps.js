@@ -1,3 +1,5 @@
+var DG = window.DG || [];
+
 ( function( $, window, document, undefined ) {
 
 	'use strict';
@@ -5,127 +7,56 @@
     var mihdan_elementor_two_gis_maps = function( $scope, $ ) {
 
         var mapid = $scope.find('.mihdan-elementor-two-gis-map'),
-            maptype = $(mapid).data("eb-map-type"),
-            zoom = $(mapid).data("eb-map-zoom"),
-            map_lat = parseFloat( $( mapid ).data("eb-map-lat") ),
-            map_lng = parseFloat( $( mapid ).data("eb-map-lng") ),
-	        ruler_control = $(mapid).data("eb-ruler-control"),
-	        search_control = $(mapid).data("eb-search-control"),
-	        traffic_control = $(mapid).data("eb-traffic-control"),
-	        type_selector = $(mapid).data("eb-type-selector"),
-	        zoom_control = $(mapid).data("eb-zoom-control"),
-	        geolocation_control = $(mapid).data("eb-geolocation-control"),
-	        route_editor = $(mapid).data("eb-route-editor"),
-	        fullscreen_control = $(mapid).data("eb-fullscreen-control"),
-	        route_button_control = $(mapid).data("eb-route-button-control"),
-	        route_panel_control = $(mapid).data("eb-route-panel-control"),
-	        disable_scroll_zoom = $(mapid).data("eb-disable-scroll-zoom"),
-	        disable_dbl_click_zoom = $(mapid).data("eb-disable-dbl-click-zoom"),
-	        disable_drag = $(mapid).data("eb-disable-drag"),
-	        disable_left_mouse_button_magnifier = $(mapid).data("eb-disable-left-mouse-button-magnifier"),
-	        disable_right_mouse_button_magnifier = $(mapid).data("eb-disable-right-mouse-button-magnifier"),
-	        disable_multi_touch = $(mapid).data("eb-disable-disable-multi-touch"),
-	        disable_route_editor = $(mapid).data("eb-disable-route-editor"),
-	        disable_ruler = $(mapid).data("eb-disable-ruler"),
-            infowindow_max_width = parseInt( $(mapid).data("eb-infowindow-max-width") ),
+            zoom = $(mapid).data("metm-map-zoom"),
+            map_lat = parseFloat( $( mapid ).data("metm-map-lat") ),
+            map_lng = parseFloat( $( mapid ).data("metm-map-lng") ),
+	        ruler_control = $(mapid).data("metm-ruler-control"),
+	        traffic_control = $(mapid).data("metm-traffic-control"),
+	        zoom_control = $(mapid).data("metm-zoom-control"),
+	        fullscreen_control = $(mapid).data("metm-fullscreen-control"),
+	        scale_control = $(mapid).data("metm-scale-control"),
             active_info,
             infowindow,
-            map,
-            controls = [];
-
-        if ( 'yes' === ruler_control ) {
-	        controls.push( 'rulerControl' );
-        }
-
-        if ( 'yes' === search_control ) {
-	        controls.push( 'searchControl' );
-        }
-
-        if ( 'yes' === traffic_control ) {
-	        controls.push( 'trafficControl' );
-        }
-
-        if ( 'yes' === type_selector ) {
-	        controls.push( 'typeSelector' );
-        }
-
-        if ( 'yes' === zoom_control ) {
-	        controls.push( 'zoomControl' );
-        }
-
-        if ( 'yes' === geolocation_control ) {
-	        controls.push( 'geolocationControl' );
-        }
-
-        if ( 'yes' === route_editor ) {
-	        controls.push( 'routeEditor' );
-        }
-
-        if ( 'yes' === fullscreen_control ) {
-	        controls.push( 'fullscreenControl' );
-        }
-
-        if ( 'yes' === route_button_control ) {
-	        controls.push( 'routeButtonControl' );
-        }
-
-        if ( 'yes' === route_panel_control ) {
-	        controls.push( 'routePanelControl' );
-        }
-
+            map;
 
 	    DG.then( function () {
 		    map = DG.map( mapid.attr('id'), {
 			    center: [ map_lat, map_lng ],
-			    zoom: zoom
-		    });
+			    zoom: zoom,
+			    dragging : false,
+			    touchZoom: false,
+			    scrollWheelZoom: false,
+			    doubleClickZoom: false,
+			    boxZoom: false,
+			    geoclicker: false,
+			    zoomControl: false,
+			    fullscreenControl: false
+		    } );
+
+		    // Добавить контроллы на карту
+		    if ( 'yes' === ruler_control ) {
+			    DG.control.ruler().addTo( map );
+		    }
+
+		    if ( 'yes' === traffic_control ) {
+			    DG.control.traffic().addTo( map );
+		    }
+
+		    if ( 'yes' === zoom_control ) {
+			    DG.control.zoom().addTo( map );
+		    }
+
+		    if ( 'yes' === fullscreen_control ) {
+			    DG.control.fullscreen().addTo( map );
+		    }
+
+		    if ( 'yes' === scale_control ) {
+			    DG.control.scale().addTo( map );
+		    }
 	    } );
 
-
-
-
-
-//	        // Отключить прокрутку колесом мыши
-//	        if ( 'yes' === disable_scroll_zoom ) {
-//		        map.behaviors.disable('scrollZoom');
-//	        }
 //
-//	        // Отключить масштабирование карты двойным щелчком кнопки мыши
-//	        if ( 'yes' === disable_dbl_click_zoom ) {
-//		        map.behaviors.disable('dblClickZoom');
-//	        }
-//
-//			// Отключить перетаскивание карты с помощью мыши либо одиночного касания
-//	        if ( 'yes' === disable_drag ) {
-//		        map.behaviors.disable('drag');
-//	        }
-//
-//	        // Отключить масштабирование карты при выделении области левой кнопкой мыши
-//	        if ( 'yes' === disable_left_mouse_button_magnifier ) {
-//		        map.behaviors.disable('leftMouseButtonMagnifier');
-//	        }
-//
-//	        // Отключить масштабирование карты при выделении области правой кнопкой мыши
-//	        if ( 'yes' === disable_right_mouse_button_magnifier ) {
-//		        map.behaviors.disable('rightMouseButtonMagnifier');
-//	        }
-//
-//	        // Отключить масштабирование карты мультисенсорным касанием
-//	        if ( 'yes' === disable_multi_touch ) {
-//		        map.behaviors.disable('multiTouch');
-//	        }
-//
-//	        // Отключить редактор маршрутов
-//	        if ( 'yes' === disable_route_editor ) {
-//		        map.behaviors.disable('routeEditor');
-//	        }
-//
-//	        // Отключить линейку
-//	        if ( 'yes' === disable_ruler ) {
-//		        map.behaviors.disable('ruler');
-//	        }
-//
-//            var markersLocations = $( mapid ).data('eb-locations');
+//            var markersLocations = $( mapid ).data('metm-locations');
 //
 //            $.each( markersLocations, function( index, Element, content ) {
 //                var icon_color = '';
